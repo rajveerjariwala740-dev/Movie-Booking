@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-//Routes
+// Routes
 app.use('/api/auth', userRouter);
 app.use('/api/movies', movieRouter);
 app.use('/api/theatres', theatreRouter);
@@ -26,7 +26,14 @@ app.use('/api/screens', screenRouter);
 app.use('/api/shows', showRouter);
 app.use('/api/bookings', router);
 
-
+const path = require('path');
+// Serve static frontend files in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../frontend/dist')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '../frontend', 'dist', 'index.html'));
+    });
+}
 
 app.use(errorHandler);
 (async () => {
