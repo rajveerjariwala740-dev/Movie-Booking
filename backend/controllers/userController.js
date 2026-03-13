@@ -21,7 +21,7 @@ const register = async (req, res, next) => {
         const verificationToken = user.getVerificationToken();
         await user.save({ validateBeforeSave: false });
 
-        const verificationUrl = `http://localhost:3000/api/auth/verify/${verificationToken}`;
+        const verificationUrl = `${process.env.BASE_URL || 'http://localhost:3000'}/api/auth/verify/${verificationToken}`;
 
 
         const message = `
@@ -150,7 +150,7 @@ const forgotPassword = async (req, res, next) => {
         const resetToken = user.getResetToken();
         await user.save({ validateBeforeSave: false });
 
-        const resetUrl = `http://localhost:3000/api/auth/resetpassword/${resetToken}`;
+        const resetUrl = `${process.env.BASE_URL || 'http://localhost:3000'}/api/auth/resetpassword/${resetToken}`;
 
         const message = `This mail is received to rest Password ${resetUrl}`;
 
